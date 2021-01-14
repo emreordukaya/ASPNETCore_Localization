@@ -104,7 +104,7 @@ namespace ASPNETCore_Localization
                     {
                         mvcRoutes.MapRoute(
                             name: "default",
-                            template: "{culture=en-US}/{controller=Home}/{action=Index}/{id?}");
+                            template: "{culture=tr-TR}/{controller=Home}/{action=Index}/{id?}");
                     });
                 });
             });

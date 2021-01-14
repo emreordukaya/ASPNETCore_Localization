@@ -13,6 +13,17 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="Views\Home\About.cshtml" />
+    <None Include="Views\Home\Contact.cshtml" />
+    <None Include="Views\Home\Index.cshtml" />
+    <None Include="Views\Shared\Error.cshtml" />
+    <None Include="Views\Shared\_Layout.cshtml" />
+    <None Include="Views\Shared\_ValidationScriptsPartial.cshtml" />
+    <None Include="Views\_ViewImports.cshtml" />
+    <None Include="Views\_ViewStart.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Update="Resources\HomeController.tr-TR.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -21,14 +32,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Update="Resources\Models.ContactFormViewModel.en-US.resx">
-      <LastGenOutput>HomeController.tr-TR.Designer.cs</LastGenOutput>
-      <Generator>ResXFileCodeGenerator</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Resources\Controllers.HomeController.tr-TR.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>HomeController.tr-TR.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
+    <Folder Include="Resources\Controllers\" />
   </ItemGroup>
 
 </Project>
