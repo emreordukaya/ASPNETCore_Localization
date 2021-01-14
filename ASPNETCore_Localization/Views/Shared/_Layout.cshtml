@@ -34,6 +34,9 @@
                     <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
                     <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
                 </ul>
+                <div>
+                    @await Html.PartialAsync("_SelectLanguagePartial")
+                </div>
             </div>
         </div>
     </nav>
@@ -65,7 +68,11 @@
         </script>
         <script src="~/js/site.min.js" asp-append-version="true"></script>
     </environment>
-
+    <script type="text/javascript">
+        function submitform() {
+            $('#selectLanguage').submit();
+        }
+    </script>
     @RenderSection("Scripts", required: false)
 </body>
 </html>

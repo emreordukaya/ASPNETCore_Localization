@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Routing;
 //
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 using System.Collections.Generic;
 using System.Globalization;
 
@@ -36,11 +37,30 @@ namespace ASPNETCore_Localization
                 .AddMvc()
                 .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
                 .AddDataAnnotationsLocalization();
+
+            // Dil dosyası ekliyoruz. 
+            services.Configure<RequestLocalizationOptions>(options =>
+            {
+                var supportedCultures = new[]
+                {
+                    new CultureInfo("tr-TR"),
+                    new CultureInfo("en-US")
+                };
+
+                // Default olarak seçiyoruz.
+                options.DefaultRequestCulture = new RequestCulture(culture: "tr-TR", uiCulture: "tr-TR");
+
+                options.SupportedCultures = supportedCultures;
+                options.SupportedUICultures = supportedCultures;
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+            var locOptions = app.ApplicationServices.GetService<IOptions<RequestLocalizationOptions>>();
+            app.UseRequestLocalization(locOptions.Value);
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -53,60 +73,14 @@ namespace ASPNETCore_Localization
 
             app.UseStaticFiles();
 
-            // STANDART ROUTİNG MEKANİZMASI İLE DİL DESTEĞİ KULLANMAK
-
-            //var supportedCultures = new List<CultureInfo>
-            //{
-            //    new CultureInfo("tr-TR"),
-            //    new CultureInfo("en-US"),
-            //};
-
-
-            //app.UseRequestLocalization(new RequestLocalizationOptions
-            //{
-            //    SupportedCultures = supportedCultures,
-            //    SupportedUICultures = supportedCultures,
-            //    DefaultRequestCulture = new RequestCulture("tr-TR")
-            //});
-
-            //app.UseMvc(routes =>
-            //{
-            //    routes.MapRoute(
-            //        name: "default",
-            //        template: "{controller=Home}/{action=Index}/{id?}");
-            //});
-
 
             // DİL DESTEĞİNİ ROUTİNG YAPISINA GÖRE AYARLAMAK
 
-            var supportedCultures = new List<CultureInfo>
+            app.UseMvc(routes =>
             {
-                new CultureInfo("tr-TR"),
-                new CultureInfo("en-US"),
-            };
-
-            var localizationOptions = new RequestLocalizationOptions
-            {
-                SupportedCultures = supportedCultures,
-                SupportedUICultures = supportedCultures,
-                DefaultRequestCulture = new RequestCulture("tr-TR"),
-            };
-            var requestProvider = new RouteDataRequestCultureProvider();
-            localizationOptions.RequestCultureProviders.Insert(0, requestProvider);
-
-            app.UseRouter(routes =>
-            {
-                routes.MapMiddlewareRoute("{culture=tr-TR}/{*mvcRoute}", subApp =>
-                {
-                    subApp.UseRequestLocalization(localizationOptions);
-
-                    subApp.UseMvc(mvcRoutes =>
-                    {
-                        mvcRoutes.MapRoute(
-                            name: "default",
-                            template: "{culture=tr-TR}/{controller=Home}/{action=Index}/{id?}");
-                    });
-                });
+                routes.MapRoute(
+                    name: "default",
+                    template: "{controller=Home}/{action=Index}/{id?}");
             });
         }
     }

@@ -2,6 +2,9 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using Microsoft.Extensions.Localization;
+using Microsoft.AspNetCore.Localization;
+using Microsoft.AspNetCore.Http;
+using System;
 
 namespace ASPNETCore_Localization.Controllers
 {
@@ -45,6 +48,18 @@ namespace ASPNETCore_Localization.Controllers
         public IActionResult Kaydet(ContactFormViewModel viewModel)
         {
             return View("Contact", viewModel);
+        }
+
+        [HttpPost]
+        public IActionResult SetLanguage(string culture, string returnUrl)
+        {
+            Response.Cookies.Append(
+                CookieRequestCultureProvider.DefaultCookieName,
+                CookieRequestCultureProvider.MakeCookieValue(new RequestCulture(culture)),
+                new CookieOptions { Expires = DateTimeOffset.UtcNow.AddYears(1) }
+            );
+
+            return LocalRedirect(returnUrl);
         }
     }
 }
