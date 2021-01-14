@@ -7,4 +7,6 @@ Yukarıdaki makale temel alındı. Akabinde;
 * Resource klasörü tamamen düzenlendi.
 * Çoklu dil seçeneği eklendi.
 * Startup dosyası düzenlendi.
-* Dil seçimi cookie tabnlı olarak düzenlendi ve URL tabanlı kullanım devre dışı bırakıldı.
+* Dil seçimi cookie tabanlı olarak düzenlendi ve URL tabanlı kullanım devre dışı bırakıldı.
+
+
